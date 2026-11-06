@@ -6,7 +6,7 @@ const FORECAST_URL = "https://api.open-meteo.com/v1/forecast";
 // GET 1: tìm thành phố theo tên -> danh sách địa điểm (rỗng nếu không thấy)
 export async function searchCity(name) {
   const res = await axios.get(GEO_URL, {
-    params: { name, count: 5, language: "vi" },
+    params: { name, count: 10, language: "vi" },
   });
   return res.data.results ?? [];
 }
