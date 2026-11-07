@@ -8,6 +8,7 @@ export function exportForecast(placeName, daily) {
     "Thời tiết": describeWeather(daily.weather_code[i]).label,
     "Thấp nhất (°C)": daily.temperature_2m_min[i],
     "Cao nhất (°C)": daily.temperature_2m_max[i],
+    "Xác suất mưa (%)": daily.precipitation_probability_max[i],
   }));
 
   const wb = XLSX.utils.book_new();

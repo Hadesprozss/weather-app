@@ -17,11 +17,29 @@ export async function getForecast(latitude, longitude) {
     params: {
       latitude,
       longitude,
-      current: "temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m",
-      daily: "weather_code,temperature_2m_max,temperature_2m_min",
+      current:
+        "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day",
+      hourly: "temperature_2m,weather_code,precipitation_probability",
+      daily:
+        "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
       timezone: "auto",
       forecast_days: 7,
+      forecast_hours: 24,
     },
   });
   return res.data;
+}
+
+// GET 3: lấy thời tiết hiện tại của nhiều thành phố chỉ bằng MỘT lần gọi
+export async function getOverview(cities) {
+  const res = await axios.get(FORECAST_URL, {
+    params: {
+      latitude: cities.map((c) => c.latitude).join(","),
+      longitude: cities.map((c) => c.longitude).join(","),
+      current: "temperature_2m,weather_code,is_day",
+      timezone: "auto",
+    },
+  });
+  // Nhiều tọa độ thì API trả về mảng; chỉ một tọa độ thì trả về đối tượng
+  return Array.isArray(res.data) ? res.data : [res.data];
 }

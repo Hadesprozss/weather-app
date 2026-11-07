@@ -40,7 +40,7 @@ export default function SearchBox({ onSelect }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Nhập tên thành phố, ví dụ: Đà Nẵng"
-          className="flex-1 rounded-xl border border-sky-200 bg-white px-4 py-2 outline-none focus:ring-2 focus:ring-sky-400"
+          className="flex-1 rounded-xl border border-sky-200 bg-white px-4 py-2 outline-none focus:ring-2 focus:ring-sky-400 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100"
         />
         <button
           type="submit"
@@ -52,23 +52,25 @@ export default function SearchBox({ onSelect }) {
         </button>
       </form>
 
-      {error && <p className="mt-3 text-red-600">{error}</p>}
+      {error && <p className="mt-3 text-red-600 dark:text-red-400">{error}</p>}
 
       {searched && results.length === 0 && (
-        <p className="mt-3 text-slate-600">Không tìm thấy thành phố nào khớp với "{text}".</p>
+        <p className="mt-3 text-slate-600 dark:text-slate-300">
+          Không tìm thấy địa danh nào khớp với "{text}". Hãy thử tên thành phố hoặc thị xã.
+        </p>
       )}
 
       {results.length > 0 && (
-        <ul className="mt-3 overflow-hidden rounded-xl border border-sky-100 bg-white">
+        <ul className="mt-3 overflow-hidden rounded-xl border border-sky-100 bg-white dark:border-slate-700 dark:bg-slate-800">
           {results.map((p) => (
             <li key={p.id}>
               <button
                 onClick={() => pick(p)}
-                className="flex w-full items-center gap-2 px-4 py-2 text-left hover:bg-sky-50"
+                className="flex w-full items-center gap-2 px-4 py-2 text-left hover:bg-sky-50 dark:hover:bg-slate-700"
               >
-                <MapPin size={16} className="text-sky-600" />
+                <MapPin size={16} className="text-sky-600 dark:text-sky-300" />
                 {p.name}
-                <span className="text-sm text-slate-500">
+                <span className="text-sm text-slate-500 dark:text-slate-400">
                   {[p.admin1, p.country].filter(Boolean).join(", ")}
                 </span>
               </button>

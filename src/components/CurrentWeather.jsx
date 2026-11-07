@@ -1,11 +1,14 @@
-import { Droplets, Wind } from "lucide-react";
+import { Droplets, Wind, Thermometer } from "lucide-react";
 import { describeWeather } from "../utils/weatherCode";
+import { getTheme } from "../utils/weatherTheme";
+import { cn } from "../lib/utils";
 
 export default function CurrentWeather({ place, current }) {
   const { label, Icon } = describeWeather(current.weather_code);
+  const theme = getTheme(current.weather_code, current.is_day);
 
   return (
-    <div className="rounded-2xl bg-sky-600 p-6 text-white shadow">
+    <div className={cn("rounded-2xl bg-linear-to-br p-6 text-white shadow-lg", theme)}>
       <p className="text-lg">
         {place.name}
         {place.country ? `, ${place.country}` : ""}
@@ -17,7 +20,10 @@ export default function CurrentWeather({ place, current }) {
           <p>{label}</p>
         </div>
       </div>
-      <div className="mt-4 flex gap-6 text-sm">
+      <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
+        <span className="flex items-center gap-1">
+          <Thermometer size={16} /> Cảm giác như {Math.round(current.apparent_temperature)}°C
+        </span>
         <span className="flex items-center gap-1">
           <Droplets size={16} /> Độ ẩm {current.relative_humidity_2m}%
         </span>
